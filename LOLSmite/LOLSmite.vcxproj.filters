@@ -39,6 +39,12 @@
     <ClInclude Include="ObjectManager.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="Unit.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="Offset.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -63,6 +69,12 @@
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="ObjectManager.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="Unit.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="Offset.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>

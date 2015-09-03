@@ -1,6 +1,4 @@
 #include "stdafx.h"
-#include "Memory.h"
-#define _DEFINE_PTRS
 
 
 CMemory::CMemory(void)

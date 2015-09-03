@@ -1,17 +1,23 @@
 #pragma once
-#include <Windows.h>
+
+class CUnit;
 
 class CObjectManager
 {
 public:
-	//inline Unit** GetFirst(void) { return m_lpcUnits; }
-	inline DWORD GetMaxObjects(void) { return m_dwMaxObjects; }
-	inline DWORD GetObjects(void) { return m_dwObjects; }
-	//inline Unit** GetEnd(void) { return m_lpcUnits + m_dwEnd; }
+	inline CUnit** GetFirst(void) { return m_lpcUnits; }
+	inline int GetMaxObjects(void) { return m_dwMaxObjects; }
+	inline int GetObjects(void) { return m_dwObjects; }
+	inline int GetEnd(void) { return m_dwEnd; }
 
 private:
-	///* 0x00 */ Unit** m_lpcUnits;
-	/* 0x04 */ DWORD m_dwMaxObjects;
-	/* 0x08 */ DWORD m_dwObjects;
-	/* 0x0C */ DWORD m_dwEnd;
+	/* 0x00 */ CUnit** m_lpcUnits;
+	/* 0x04 */ int m_dwMaxObjects;
+	/* 0x08 */ int m_dwObjects;
+	/* 0x0C */ int m_dwEnd;
+
+	///*0x0*/	cObject** ObjectArray;
+	///*0x4*/	int MaxObjects;
+	///*0x8*/	int ObjectCount;
+	///*0xC*/	int indexLastObject;
 };

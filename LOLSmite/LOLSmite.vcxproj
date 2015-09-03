@@ -155,8 +155,10 @@
     <ClInclude Include="DX9Hook.h" />
     <ClInclude Include="Memory.h" />
     <ClInclude Include="ObjectManager.h" />
+    <ClInclude Include="Offset.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="Unit.h" />
     <ClInclude Include="Util.h" />
   </ItemGroup>
   <ItemGroup>
@@ -179,12 +181,14 @@
     <ClCompile Include="LOLSmite.cpp" />
     <ClCompile Include="Memory.cpp" />
     <ClCompile Include="ObjectManager.cpp" />
+    <ClCompile Include="Offset.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Unit.cpp" />
     <ClCompile Include="Util.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

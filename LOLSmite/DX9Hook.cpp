@@ -1,18 +1,8 @@
 
 #include "stdafx.h"
-#include <windows.h>
-#include <d3d9.h>
-#include <d3dx9.h>
-#include <stdio.h>
-#include <sstream>
-#include <string>
-#include <iomanip>
-#include "Memory.h"
-#include "Util.h"
-
 #pragma comment(lib, "d3d9.lib")
 #pragma comment(lib, "d3dx9.lib")
-#include "DX9Hook.h"
+
 
 typedef HRESULT(WINAPI* EndScene_t)(LPDIRECT3DDEVICE9 pDevice);
 static HRESULT __stdcall EndScene(LPDIRECT3DDEVICE9 pDevice);
@@ -41,22 +31,6 @@ static VOID WriteText(LPDIRECT3DDEVICE9 pDevice, INT x, INT y, DWORD color, LPCW
 	pFont->DrawText(NULL, text, -1, &rect, DT_NOCLIP | DT_LEFT, color);
 }
 
-bool CDX9Hook::Mask(const BYTE* pData, const BYTE* bMask, const char* szMask)
-{
-	for (; *szMask; ++szMask, ++pData, ++bMask)
-		if (*szMask == 'x' && *pData != *bMask)
-			return false;
-	return (*szMask) == NULL;
-}
-
-DWORD CDX9Hook::FindPattern(DWORD dwAddress, DWORD dwLen, BYTE *bMask, char * szMask)
-{
-	for (DWORD i = 0; i < dwLen; i++)
-		if (this->Mask((BYTE*)(dwAddress + i), bMask, szMask))
-			return (DWORD)(dwAddress + i);
-	return 0;
-}
-
 void DrawRect(LPDIRECT3DDEVICE9 Device_t, int X, int Y, int L, int H, D3DCOLOR color)
 {
 	D3DRECT rect = { X, Y, X + L, Y + H };
@@ -77,7 +51,7 @@ HRESULT CDX9Hook::HkEndScene(LPDIRECT3DDEVICE9 pDevice) {
 
 DWORD WINAPI CDX9Hook::SetupEndsceneHook()
 {
-	CUtil::instance()->addLog("Thread created!");
+	CUtil::Instance()->AddLog("Thread created!");
 
 	HMODULE hModule = NULL;
 	while (!hModule)
@@ -85,8 +59,11 @@ DWORD WINAPI CDX9Hook::SetupEndsceneHook()
 		hModule = GetModuleHandleA("d3d9.dll"); // get dll handle
 		Sleep(100);
 	}
-	CUtil::instance()->addLog("D3D9.dll found!");
-	DWORD tempadd = FindPattern((DWORD)hModule, 0x128000, (PBYTE)"\xC7\x06\x00\x00\x00\x00\x89\x86\x00\x00\x00\x00\x89\x86", "xx????xx????xx");
+	CUtil::Instance()->AddLog("D3D9.dll found!");
+
+	//std::cout <<  "d3d9.dll size: " << modInfo.SizeOfImage << std::endl;
+
+	DWORD tempadd = CUtil::Instance()->FindPattern((DWORD)hModule, CUtil::Instance()->GetModuleInfo(hModule).SizeOfImage, (PBYTE)"\xC7\x06\x00\x00\x00\x00\x89\x86\x00\x00\x00\x00\x89\x86", "xx????xx????xx");
 	memcpy(&vTable, (void*)(tempadd + 2), 4);
 	DWORD dwEndScene = vTable[42];
 	pEndScene = m_cMemory.Patch<EndScene_t>(CMemory::Inline, (DWORD)dwEndScene, (DWORD)HkEndScene);
@@ -94,7 +71,8 @@ DWORD WINAPI CDX9Hook::SetupEndsceneHook()
 	return 0;
 }
 
-void CDX9Hook::InitHook(bool fAllocConsole) {
+void CDX9Hook::InitHook(bool fAllocConsole) 
+{
 	if (fAllocConsole) {
 		this->FAllocConsole();
 	}

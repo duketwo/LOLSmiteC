@@ -1,7 +1,5 @@
 // dllmain.cpp : Definiert den Einstiegspunkt für die DLL-Anwendung.
 #include "stdafx.h"
-#include <windows.h>
-#include "DX9Hook.h"
 
 
 
@@ -13,7 +11,7 @@ int WINAPI DllMain(HINSTANCE hInst, DWORD reason, LPVOID reserved)
 	{
 	case DLL_PROCESS_ATTACH:
 
-		dx9h->InitHook(false);
+		dx9h->InitHook(true);
 
 		break;
 	case DLL_PROCESS_DETACH:

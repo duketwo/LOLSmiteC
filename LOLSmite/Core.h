@@ -6,7 +6,7 @@ public:
 	~CCore();
 	void EndSceneLoop();
 	bool firstFrame;
-	DWORD m_dwLastCheck;
+	ULONGLONG m_dwLastCheck;
 	HWND m_hWnd;
 };
 
